@@ -9,6 +9,8 @@ addEventListener('fetch', event => {
 async function handleRequest(request) {
     try {
         const { wasm_main } = wasm_bindgen;
+
+        // noinspection JSUnresolvedVariable
         await wasm_bindgen(wasm);
 
         const headers = {};
@@ -16,6 +18,7 @@ async function handleRequest(request) {
             headers[key] = value;
         }
 
+        // noinspection JSUnresolvedVariable
         const context = {
             request: {
                 headers,
