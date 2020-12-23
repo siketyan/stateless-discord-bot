@@ -1,5 +1,8 @@
 [package]
 name = "stateless-discord-bot"
+description = "An example of stateless Discord Bot using Slash Commands feature and Cloudflare Workers."
+repository = "https://github.com/siketyan/stateless-discord-bot.git"
+license = "MIT"
 version = "0.1.0"
 authors = ["Naoki Ikeguchi <root@siketyan.dev>"]
 edition = "2018"
