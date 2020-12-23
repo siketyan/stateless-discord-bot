@@ -1,9 +1,9 @@
 name = "stateless-discord-bot"
 type = "rust"
-account_id = ""
+account_id = "{{ACCOUNT_ID}}"
 workers_dev = true
 route = ""
 zone_id = ""
 
 [vars]
-PUBLIC_KEY = ""
+PUBLIC_KEY = "{{PUBLIC_KEY}}"
