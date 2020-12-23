@@ -1,4 +1,6 @@
 # 🧲 Stateless Discord Bot
+![Rust](https://github.com/siketyan/stateless-discord-bot/workflows/Rust/badge.svg)
+
 An example of stateless Discord Bot using Slash Commands feature and Cloudflare Workers.
 
 ## ✨ Features
