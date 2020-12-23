@@ -44,7 +44,7 @@ impl Interaction {
         Ok(self
             .data
             .as_ref()
-            .ok_or(Error::InvalidPayload("data not found".to_string()))?)
+            .ok_or_else(|| Error::InvalidPayload("data not found".to_string()))?)
     }
 }
 

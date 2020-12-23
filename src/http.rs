@@ -15,7 +15,7 @@ impl HttpRequest {
     pub(crate) fn header(&self, key: &str) -> Result<&String, Error> {
         self.headers
             .get(key)
-            .ok_or(Error::HeaderNotFound(key.to_string()))
+            .ok_or_else(|| Error::HeaderNotFound(key.to_string()))
     }
 }
 

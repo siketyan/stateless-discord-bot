@@ -21,19 +21,17 @@ pub(crate) fn verify_signature(
     body: &str,
 ) -> Result<(), VerificationError> {
     let public_key = &hex::decode(public_key)
-        .map_err(|error| VerificationError::ParseHexFailed(error))
+        .map_err(VerificationError::ParseHexFailed)
         .and_then(|bytes| {
-            PublicKey::from_bytes(&bytes)
-                .map_err(|error| VerificationError::InvalidSignature(error))
+            PublicKey::from_bytes(&bytes).map_err(VerificationError::InvalidSignature)
         })?;
 
     Ok(public_key.verify(
         format!("{}{}", timestamp, body).as_bytes(),
         &hex::decode(&signature)
-            .map_err(|error| VerificationError::ParseHexFailed(error))
+            .map_err(VerificationError::ParseHexFailed)
             .and_then(|bytes| {
-                Signature::from_bytes(&bytes)
-                    .map_err(|error| VerificationError::InvalidSignature(error))
+                Signature::from_bytes(&bytes).map_err(VerificationError::InvalidSignature)
             })?,
     )?)
 }
