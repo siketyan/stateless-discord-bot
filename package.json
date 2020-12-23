@@ -1,0 +1,10 @@
+{
+  "name": "stateless-discord-bot",
+  "private": true,
+  "scripts": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
