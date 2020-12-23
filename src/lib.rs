@@ -1,10 +1,17 @@
 extern crate cfg_if;
 extern crate wasm_bindgen;
 
+mod context;
+mod discord;
+mod error;
+mod http;
 mod utils;
 
 use cfg_if::cfg_if;
 use wasm_bindgen::prelude::*;
+
+use crate::context::Context;
+use crate::http::HttpResponse;
 
 cfg_if! {
     // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -17,6 +24,15 @@ cfg_if! {
 }
 
 #[wasm_bindgen]
-pub fn greet() -> String {
-    "Hello, wasm-worker!".to_string()
+pub fn wasm_main(context: &JsValue) -> JsValue {
+    JsValue::from_serde(
+        &(match context.into_serde::<Context>() {
+            Ok(ctx) => ctx.handle_http_request(),
+            Err(error) => HttpResponse {
+                status: 400,
+                body: error.to_string(),
+            },
+        }),
+    )
+    .unwrap()
 }
