@@ -1,0 +1,42 @@
+name: Wrangler
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-deploy-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install latest stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install Wrangler CLI
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: wrangler
+
+      - name: Configure Wrangler CLI
+        run: echo "api_token = \"${{ secrets.CLOUDFLARE_API_KEY }}\"" > ~/.wrangler/config/default.toml
+
+      - name: Deploy to Cloudflare Workers
+        run: wrangler publish
