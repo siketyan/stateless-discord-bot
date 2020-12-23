@@ -16,7 +16,7 @@ An example of stateless Discord Bot using Slash Commands feature and Cloudflare 
 1. Create an application command. For example:
    ```console
    curl \
-     -H "Authorization: Bot ${DISCORD_BOT_TOKEN" \
+     -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" \
      -H "Content-Type: application/json" \
      -d '{"name":"hello","description":"The bot will say \"Hello, world!\"."}' \
      "https://discord.com/api/v8/applications/${APPLICATION_ID}/commands"
