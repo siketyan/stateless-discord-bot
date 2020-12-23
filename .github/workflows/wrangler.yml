@@ -44,7 +44,7 @@ jobs:
       - name: Inject settings for the project
         run: |
           cp ./wrangler.example.toml ./wrangler.toml
-          sed -i 's/{{ACCOUNT_ID}}/${{ secrets.CLOUDFLATE_ACCOUNT_ID }}/' ./wrangler.toml
+          sed -i 's/{{ACCOUNT_ID}}/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/' ./wrangler.toml
           sed -i 's/{{PUBLIC_KEY}}/${{ secrets.DISCORD_PUBLIC_KEY }}/' ./wrangler.toml
 
       - name: Deploy to Cloudflare Workers
