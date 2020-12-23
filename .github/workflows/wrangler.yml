@@ -18,6 +18,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: |
+            ~/.cargo/bin
             ~/.cargo/registry
             ~/.cargo/git
             target
@@ -36,7 +37,9 @@ jobs:
           args: wrangler
 
       - name: Configure Wrangler CLI
-        run: echo "api_token = \"${{ secrets.CLOUDFLARE_API_KEY }}\"" > ~/.wrangler/config/default.toml
+        run: |
+          mkdir -p ~/.wrangler/config
+          echo "api_token = \"${{ secrets.CLOUDFLARE_API_KEY }}\"" > ~/.wrangler/config/default.toml
 
       - name: Deploy to Cloudflare Workers
         run: wrangler publish
