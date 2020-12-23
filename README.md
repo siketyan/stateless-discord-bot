@@ -1,39 +1,24 @@
-# 👷‍♀️🦀🕸️ `rustwasm-worker-template`
+# 🧲 Stateless Discord Bot
+An example of stateless Discord Bot using Slash Commands feature and Cloudflare Workers.
 
-A template for kick starting a Cloudflare worker project using
-[`wasm-pack`](https://github.com/rustwasm/wasm-pack).
+## ✨ Features
+- 🦀 Using Rust (with WebAssembly)!
+- 🔌 You can create a **stateless** Discord Bot
+- 🛠 Of course it is serverless
+- 💰 Free for 100,000 requests with Cloudflare Workers
 
-This template is designed for compiling Rust libraries into WebAssembly and
-publishing the resulting worker to Cloudflare's worker infrastructure.
-
-## 🔋 Batteries Included
-
-* [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
-  between WebAssembly and JavaScript.
-* [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
-  for logging panic messages to the developer console.
-* [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
-  for small code size.
-
-## 🚴 Usage
-
-### 🐑 Use `wrangler generate` to Clone this Template
-
-[Learn more about `wrangler generate` here.](https://github.com/cloudflare/wrangler)
-
-```
-wrangler generate wasm-worker  https://github.com/cloudflare/rustwasm-worker-template.git
-cd wasm-worker
-```
-
-### 🛠️ Build with `wasm-pack build`
-
-```
-wasm-pack build
-```
-
-### 🔬 Test in Headless Browsers with `wasm-pack test`
-
-```
-wasm-pack test --headless --firefox
-```
+## 📦 Installation
+1. Clone this repository.
+1. Copy `wrangler.example.toml`, then rename it to `wranger.toml` .
+1. Edit the file, filling `account_id` and `env.PUBLIC_KEY` .
+1. Deploy using `wrangler publish` .
+1. Register your endpoint at Discord Developer Portal.
+1. Create an application command. For example:
+   ```console
+   curl \
+     -H "Authorization: Bot ${DISCORD_BOT_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{"name":"hello","description":"The bot will say \"Hello, world!\"."}' \
+     "https://discord.com/api/v8/applications/${APPLICATION_ID}/commands"
+   ```
+1. Done!
