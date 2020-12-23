@@ -1,6 +1,3 @@
-extern crate cfg_if;
-extern crate wasm_bindgen;
-
 mod context;
 mod discord;
 mod error;
