@@ -12,11 +12,12 @@ An example of stateless Discord Bot using Slash Commands feature and Cloudflare 
 
 ## 📦 Installation
 1. Clone this repository.
-1. Copy `wrangler.example.toml`, then rename it to `wranger.toml` .
-1. Edit the file, filling `account_id` and `vars.PUBLIC_KEY` .
-1. Deploy using `wrangler publish` .
-1. Register your endpoint at Discord Developer Portal.
-1. Create an application command. For example:
+2. Copy `wrangler.example.toml`, then rename it to `wranger.toml` .
+3. Edit the file, filling `account_id` and `vars.PUBLIC_KEY` .
+4. Build the current package and all its dependencies using `cargo b -r` (Release version)
+5. Deploy using `wrangler publish` .
+6. Register your endpoint at Discord Developer Portal.
+7. Create an application command. For example:
    ```console
    $ curl \
      -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" \
