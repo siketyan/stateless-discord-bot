@@ -2,7 +2,10 @@ name = "stateless-discord-bot"
 account_id = "{{ACCOUNT_ID}}"
 workers_dev = true
 compatibility_date = "2022-08-04"
-main="./worker/worker.js"
+main = "build/worker/shim.mjs"
 
 [vars]
 PUBLIC_KEY = "{{PUBLIC_KEY}}"
+
+[build]
+command = "cargo install -q worker-build && worker-build --release"

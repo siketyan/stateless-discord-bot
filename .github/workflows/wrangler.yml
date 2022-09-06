@@ -32,11 +32,6 @@ jobs:
       - name: Install Wrangler CLI
         run: npm install -g wrangler
 
-      - name: Configure Wrangler CLI
-        run: |
-          mkdir -p ~/.wrangler/config
-          echo "api_token = \"${{ secrets.CLOUDFLARE_API_KEY }}\"" > ~/.wrangler/config/default.toml
-
       - name: Inject settings for the project
         run: |
           cp ./wrangler.example.toml ./wrangler.toml
@@ -45,3 +40,5 @@ jobs:
 
       - name: Deploy to Cloudflare Workers
         run: wrangler publish
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
