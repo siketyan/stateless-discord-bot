@@ -1,7 +1,8 @@
-use serde::{Deserialize, Serialize};
-
 use std::collections::HashMap;
 use std::fmt;
+
+use serde::{Deserialize, Serialize};
+use serde_repr::Serialize_repr;
 
 use crate::error::Error;
 
@@ -21,12 +22,14 @@ impl HttpRequest {
 
 #[derive(Serialize)]
 pub(crate) struct HttpResponse {
-    pub status: u16,
+    pub status: HttpStatus,
     pub body: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone, Serialize_repr)]
+#[repr(u16)]
 pub(crate) enum HttpStatus {
+    Ok = 200,
     BadRequest = 400,
     Unauthorized = 401,
     InternalServerError = 500,
@@ -40,7 +43,7 @@ pub(crate) struct HttpError {
 
 impl fmt::Display for HttpError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "An HTTP error occurred: {}", self.reason.to_string())
+        write!(f, "An HTTP error occurred: {}", self.reason)
     }
 }
 

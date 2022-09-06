@@ -10,15 +10,14 @@ env:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: |
-            ~/.cargo/bin
             ~/.cargo/registry
             ~/.cargo/git
             target
@@ -31,10 +30,7 @@ jobs:
           override: true
 
       - name: Install Wrangler CLI
-        uses: actions-rs/cargo@v1
-        with:
-          command: install
-          args: wrangler
+        run: npm install -g wrangler
 
       - name: Configure Wrangler CLI
         run: |

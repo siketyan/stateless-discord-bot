@@ -4,32 +4,39 @@ mod error;
 mod http;
 mod utils;
 
-use cfg_if::cfg_if;
-use wasm_bindgen::prelude::*;
+use worker::*;
 
 use crate::context::Context;
-use crate::http::HttpResponse;
+use crate::http::{HttpRequest, HttpResponse, HttpStatus};
 
-cfg_if! {
-    // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-    // allocator.
-    if #[cfg(feature = "wee_alloc")] {
-        extern crate wee_alloc;
-        #[global_allocator]
-        static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+impl HttpRequest {
+    async fn from_worker(mut request: Request) -> Result<Self> {
+        Ok(HttpRequest {
+            headers: request.headers().entries().collect(),
+            body: request.text().await?,
+        })
     }
 }
 
-#[wasm_bindgen]
-pub fn wasm_main(context: &JsValue) -> JsValue {
-    JsValue::from_serde(
-        &(match context.into_serde::<Context>() {
-            Ok(ctx) => ctx.handle_http_request(),
-            Err(error) => HttpResponse {
-                status: 400,
-                body: error.to_string(),
-            },
-        }),
-    )
-    .unwrap()
+impl From<HttpResponse> for Result<Response> {
+    fn from(response: HttpResponse) -> Self {
+        match response.status {
+            HttpStatus::Ok => Response::ok(response.body),
+            _ => Response::error(response.body, response.status as u16),
+        }
+    }
+}
+
+#[event(fetch)]
+pub async fn main(request: Request, env: Env, _ctx: worker::Context) -> Result<Response> {
+    utils::set_panic_hook();
+
+    Context {
+        env: vec![("PUBLIC_KEY".to_owned(), env.var("PUBLIC_KEY")?.to_string())]
+            .into_iter()
+            .collect(),
+        request: HttpRequest::from_worker(request).await?,
+    }
+    .handle_http_request()
+    .into()
 }
