@@ -1,4 +1,3 @@
-use ed25519_dalek::ed25519::signature::Signature as SignatureFromBytes;
 use ed25519_dalek::{PublicKey, Signature, SignatureError, Verifier};
 use hex::FromHexError;
 

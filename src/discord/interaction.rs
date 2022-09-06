@@ -41,10 +41,9 @@ pub(crate) struct Interaction {
 
 impl Interaction {
     fn data(&self) -> Result<&ApplicationCommandInteractionData, Error> {
-        Ok(self
-            .data
+        self.data
             .as_ref()
-            .ok_or_else(|| Error::InvalidPayload("data not found".to_string()))?)
+            .ok_or_else(|| Error::InvalidPayload("data not found".to_string()))
     }
 }
 

@@ -6,6 +6,7 @@ use crate::discord::interaction::Interaction;
 use crate::discord::verification::verify_signature;
 use crate::error::Error;
 use crate::http::{HttpError, HttpRequest, HttpResponse};
+use crate::HttpStatus;
 
 #[derive(Deserialize)]
 pub(crate) struct Context {
@@ -45,10 +46,13 @@ impl Context {
             .map_err(HttpError::from);
 
         match result {
-            Ok(body) => HttpResponse { status: 200, body },
+            Ok(body) => HttpResponse {
+                status: HttpStatus::Ok,
+                body,
+            },
             Err(error) => HttpResponse {
                 body: error.to_string(),
-                status: error.status as u16,
+                status: error.status,
             },
         }
     }
