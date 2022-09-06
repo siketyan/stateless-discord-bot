@@ -38,7 +38,7 @@ jobs:
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: -Dwarnings
+          args: -- -Dwarnings
 
       - name: Run rustfmt
         uses: actions-rs/cargo@v1
